@@ -15,29 +15,54 @@ Shader "Universal Render Pipeline/Unlit" {
 		[HideInInspector] _Color ("Base Color", Vector) = (0.5,0.5,0.5,1)
 		[HideInInspector] _SampleGI ("SampleGI", Float) = 0
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		sampler2D _MainTex;
-		fixed4 _Color;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-		
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
-			o.Albedo = c.rgb;
-			o.Alpha = c.a;
+	SubShader {
+		LOD 100
+		Tags { "IGNOREPROJECTOR" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" }
+		Pass {
+			Name "Unlit"
+			LOD 100
+			Tags { "IGNOREPROJECTOR" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" }
+			Blend Zero Zero, Zero Zero
+			ZWrite Off
+			Cull Off
+			GpuProgramID 2342
+			// No subprograms found
 		}
-		ENDCG
+		Pass {
+			Name "DepthOnly"
+			LOD 100
+			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "DepthOnly" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" }
+			Blend Zero Zero, Zero Zero
+			ColorMask 0 -1
+			Cull Off
+			GpuProgramID 117066
+			// No subprograms found
+		}
+	}
+	SubShader {
+		LOD 100
+		Tags { "IGNOREPROJECTOR" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" }
+		Pass {
+			Name "Unlit"
+			LOD 100
+			Tags { "IGNOREPROJECTOR" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" }
+			Blend Zero Zero, Zero Zero
+			ZWrite Off
+			Cull Off
+			GpuProgramID 210587
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthOnly"
+			LOD 100
+			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "DepthOnly" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" }
+			Blend Zero Zero, Zero Zero
+			ColorMask 0 -1
+			Cull Off
+			GpuProgramID 285426
+			// No subprograms found
+		}
 	}
 	Fallback "Hidden/Universal Render Pipeline/FallbackError"
-	//CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.UnlitShader"
+	CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.UnlitShader"
 }

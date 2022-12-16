@@ -8,25 +8,96 @@ Shader "Shader Graphs/InternalModuleShader" {
 		[HideInInspector] [NoScaleOffset] unity_LightmapsInd ("unity_LightmapsInd", 2DArray) = "" {}
 		[HideInInspector] [NoScaleOffset] unity_ShadowMasks ("unity_ShadowMasks", 2DArray) = "" {}
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType" = "Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = 1;
+	SubShader {
+		Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+		Pass {
+			Name "Universal Forward"
+			Tags { "LIGHTMODE" = "UniversalForward" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend SrcAlpha One, One One
+			ZWrite Off
+			GpuProgramID 51229
+			// No subprograms found
 		}
-		ENDCG
+		Pass {
+			Name "GBuffer"
+			Tags { "LIGHTMODE" = "UniversalGBuffer" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend SrcAlpha One, One One
+			ZWrite Off
+			GpuProgramID 93941
+			// No subprograms found
+		}
+		Pass {
+			Name "ShadowCaster"
+			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend One One, One One
+			ColorMask 0 -1
+			GpuProgramID 181488
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthOnly"
+			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend One One, One One
+			ColorMask 0 -1
+			GpuProgramID 232458
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthNormals"
+			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend One One, One One
+			GpuProgramID 315705
+			// No subprograms found
+		}
+		Pass {
+			Tags { "LIGHTMODE" = "Universal2D" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend SrcAlpha One, One One
+			ZWrite Off
+			GpuProgramID 421121
+			// No subprograms found
+		}
+	}
+	SubShader {
+		Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+		Pass {
+			Name "Universal Forward"
+			Tags { "LIGHTMODE" = "UniversalForward" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend SrcAlpha One, One One
+			ZWrite Off
+			GpuProgramID 467927
+			// No subprograms found
+		}
+		Pass {
+			Name "ShadowCaster"
+			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend One One, One One
+			ColorMask 0 -1
+			GpuProgramID 574523
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthOnly"
+			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend One One, One One
+			ColorMask 0 -1
+			GpuProgramID 590079
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthNormals"
+			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend One One, One One
+			GpuProgramID 693080
+			// No subprograms found
+		}
+		Pass {
+			Tags { "LIGHTMODE" = "Universal2D" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
+			Blend SrcAlpha One, One One
+			ZWrite Off
+			GpuProgramID 828684
+			// No subprograms found
+		}
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
-	//CustomEditor "ShaderGraph.PBRMasterGUI"
+	CustomEditor "ShaderGraph.PBRMasterGUI"
 }

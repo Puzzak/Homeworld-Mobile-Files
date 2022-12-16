@@ -7,24 +7,63 @@ Shader "Shader Graphs/MapSkyboxShader" {
 		[HideInInspector] [NoScaleOffset] unity_LightmapsInd ("unity_LightmapsInd", 2DArray) = "" {}
 		[HideInInspector] [NoScaleOffset] unity_ShadowMasks ("unity_ShadowMasks", 2DArray) = "" {}
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType" = "Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = 1;
+	SubShader {
+		Tags { "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+		Pass {
+			Name "Pass"
+			Tags { "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			GpuProgramID 35495
+			// No subprograms found
 		}
-		ENDCG
+		Pass {
+			Name "ShadowCaster"
+			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			ColorMask 0 -1
+			GpuProgramID 76809
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthOnly"
+			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			ColorMask 0 -1
+			GpuProgramID 164848
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthNormals"
+			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			GpuProgramID 226456
+			// No subprograms found
+		}
+	}
+	SubShader {
+		Tags { "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+		Pass {
+			Name "Pass"
+			Tags { "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			GpuProgramID 323659
+			// No subprograms found
+		}
+		Pass {
+			Name "ShadowCaster"
+			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			ColorMask 0 -1
+			GpuProgramID 365781
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthOnly"
+			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			ColorMask 0 -1
+			GpuProgramID 409513
+			// No subprograms found
+		}
+		Pass {
+			Name "DepthNormals"
+			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			GpuProgramID 475388
+			// No subprograms found
+		}
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
 }

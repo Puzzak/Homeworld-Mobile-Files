@@ -18,24 +18,26 @@ Shader "Custom/TerritoriesOwnershipRegionFill" {
 		[ToggleUI] _TestBlinking ("Test Blinking", Float) = 0
 		[ToggleUI] _TestWarning ("Test Warning", Float) = 0
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType" = "Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = 1;
+	SubShader {
+		Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+		Pass {
+			Name "Region Fill"
+			Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+			Blend One One, One One
+			ColorMask RGB -1
+			ZTest Less
+			ZWrite Off
+			Cull Off
+			Stencil {
+				Ref 128
+				Comp Always
+				Pass Zero
+				Fail Keep
+				ZFail Keep
+			}
+			GpuProgramID 60782
+			// No subprograms found
 		}
-		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
 }

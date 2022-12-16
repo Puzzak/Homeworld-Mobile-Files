@@ -13,26 +13,16 @@ Shader "Unlit/VertexSkyboxGammaShaderDithered" {
 		_FalloffBlend ("Falloff Blend", Range(0, 1)) = 1
 		_DebandingDitherPower ("Debanding Dither Power", Range(0, 0.0625)) = 0.023529412
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		fixed4 _Color;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-		
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = _Color.rgb;
-			o.Alpha = _Color.a;
+	SubShader {
+		Tags { "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+		Pass {
+			Name "Dithered Vertex Skybox"
+			Tags { "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Unlit" }
+			ZTest Always
+			ZWrite Off
+			GpuProgramID 4585
+			// No subprograms found
 		}
-		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
 }

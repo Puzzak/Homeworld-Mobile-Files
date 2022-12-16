@@ -2,26 +2,16 @@ Shader "OutlinePrototypeShader" {
 	Properties {
 		_MainTex ("Texture", 2D) = "white" {}
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		sampler2D _MainTex;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
-			o.Albedo = c.rgb;
-			o.Alpha = c.a;
+	SubShader {
+		LOD 100
+		Tags { "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+		Pass {
+			LOD 100
+			Tags { "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+			Blend SrcAlpha OneMinusSrcAlpha, SrcAlpha OneMinusSrcAlpha
+			ZWrite Off
+			GpuProgramID 32864
+			// No subprograms found
 		}
-		ENDCG
 	}
 }

@@ -10,27 +10,27 @@ Shader "Unlit/AdditiveUnlitShader" {
 		_StencilReadMask ("Stencil Read Mask", Float) = 255
 		_ColorMask ("Color Mask", Float) = 15
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		sampler2D _MainTex;
-		fixed4 _Color;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-		
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
-			o.Albedo = c.rgb;
-			o.Alpha = c.a;
+	SubShader {
+		Tags { "CanUseSpriteAtlas" = "true" "IGNOREPROJECTOR" = "true" "PreviewType" = "Plane" "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+		Pass {
+			Tags { "CanUseSpriteAtlas" = "true" "IGNOREPROJECTOR" = "true" "PreviewType" = "Plane" "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+			Blend SrcAlpha One, SrcAlpha One
+			ColorMask 0 -1
+			ZWrite Off
+			Cull Off
+			Stencil {
+				ReadMask 0
+				WriteMask 0
+				Comp Disabled
+				Pass Keep
+				Fail Keep
+				ZFail Keep
+			}
+			Fog {
+				Mode 0
+			}
+			GpuProgramID 42512
+			// No subprograms found
 		}
-		ENDCG
 	}
 }

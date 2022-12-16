@@ -6,26 +6,16 @@ Shader "Unlit/GradientSkyboxShaderDithered" {
 		_Alpha ("Alpha", Float) = 0.65
 		_DebandingDitherPower ("Debanding Dither Power", Range(0, 0.1)) = 0.02
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		fixed4 _Color;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-		
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = _Color.rgb;
-			o.Alpha = _Color.a;
+	SubShader {
+		Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+		Pass {
+			Name "Dithered Gradient Skybox"
+			Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
+			ZWrite Off
+			GpuProgramID 42035
+			// No subprograms found
 		}
-		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
 }

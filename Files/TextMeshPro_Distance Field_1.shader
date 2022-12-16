@@ -67,28 +67,29 @@ Shader "TextMeshPro/Distance Field" {
 		_CullMode ("Cull Mode", Float) = 0
 		_ColorMask ("Color Mask", Float) = 15
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		sampler2D _MainTex;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
-			o.Albedo = c.rgb;
-			o.Alpha = c.a;
+	SubShader {
+		Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+		Pass {
+			Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderType" = "Transparent" }
+			Blend One OneMinusSrcAlpha, One OneMinusSrcAlpha
+			ColorMask 0 -1
+			ZWrite Off
+			Cull Off
+			Stencil {
+				ReadMask 0
+				WriteMask 0
+				Comp Disabled
+				Pass Keep
+				Fail Keep
+				ZFail Keep
+			}
+			Fog {
+				Mode 0
+			}
+			GpuProgramID 8564
+			// No subprograms found
 		}
-		ENDCG
 	}
 	Fallback "TextMeshPro/Mobile/Distance Field"
-	//CustomEditor "TMPro.EditorUtilities.TMP_SDFShaderGUI"
+	CustomEditor "TMPro.EditorUtilities.TMP_SDFShaderGUI"
 }

@@ -34,26 +34,18 @@ Shader "Universal Render Pipeline/Particles/Unlit" {
 		[HideInInspector] _Mode ("mode", Float) = 0
 		[HideInInspector] _Color ("color", Vector) = (1,1,1,1)
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		fixed4 _Color;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-		
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = _Color.rgb;
-			o.Alpha = _Color.a;
+	SubShader {
+		Tags { "IGNOREPROJECTOR" = "true" "PerformanceChecks" = "False" "PreviewType" = "Plane" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+		Pass {
+			Name "ForwardLit"
+			Tags { "IGNOREPROJECTOR" = "true" "PerformanceChecks" = "False" "PreviewType" = "Plane" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
+			Blend Zero Zero, Zero Zero
+			ColorMask RGB -1
+			ZWrite Off
+			Cull Off
+			GpuProgramID 60128
+			// No subprograms found
 		}
-		ENDCG
 	}
-	//CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.ParticlesUnlitShader"
+	CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.ParticlesUnlitShader"
 }

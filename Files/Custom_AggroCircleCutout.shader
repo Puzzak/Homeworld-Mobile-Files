@@ -2,24 +2,23 @@ Shader "Custom/AggroCircleCutout" {
 	Properties {
 		_StencilReference ("Stencil Reference", Float) = 101
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType" = "Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = 1;
+	SubShader {
+		Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+		Pass {
+			Name "Region Cutout"
+			Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+			ColorMask 0 -1
+			ZTest Always
+			ZWrite Off
+			Stencil {
+				Comp Always
+				Pass Replace
+				Fail Keep
+				ZFail Replace
+			}
+			GpuProgramID 63942
+			// No subprograms found
 		}
-		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
 }

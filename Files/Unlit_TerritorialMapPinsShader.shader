@@ -7,24 +7,18 @@ Shader "Unlit/TerritorialMapPinsShader" {
 		[Header(Bounding Triangle Controls)] _RadiusCutoff ("Radius Cutoff", Range(0, 1)) = 0.5
 		[Toggle] _DisplayTriangles ("Display Triangles", Float) = 0
 	}
-	//DummyShaderTextExporter
-	SubShader{
-		Tags { "RenderType" = "Opaque" }
-		LOD 200
-		CGPROGRAM
-#pragma surface surf Standard
-#pragma target 3.0
-
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-
-		void surf(Input IN, inout SurfaceOutputStandard o)
-		{
-			o.Albedo = 1;
+	SubShader {
+		Tags { "QUEUE" = "Transparent+1" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+		Pass {
+			Name "Pin Stars"
+			Tags { "QUEUE" = "Transparent+1" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
+			Blend One One, One One
+			ZTest Always
+			ZWrite Off
+			Cull Off
+			GpuProgramID 47759
+			// No subprograms found
 		}
-		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
 }
