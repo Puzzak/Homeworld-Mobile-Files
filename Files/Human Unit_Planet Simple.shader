@@ -42,26 +42,24 @@ Shader "Human Unit/Planet Simple" {
 		_PopulationLandOcean ("PopulationLandOcean", Range(0, 1)) = 0
 		[MaterialToggle] _EmissiveLiquid ("EmissiveLiquid", Float) = 0
 	}
-	SubShader {
-		Tags { "QUEUE" = "Geometry+0" "RenderPipeline" = "LightweightPipeline" "RenderType" = "Opaque" }
-		Pass {
-			Tags { "QUEUE" = "Geometry+0" "RenderPipeline" = "LightweightPipeline" "RenderType" = "Opaque" }
-			GpuProgramID 50722
-			// No subprograms found
+	//DummyShaderTextExporter
+	SubShader{
+		Tags { "RenderType" = "Opaque" }
+		LOD 200
+		CGPROGRAM
+#pragma surface surf Standard
+#pragma target 3.0
+
+		struct Input
+		{
+			float2 uv_MainTex;
+		};
+
+		void surf(Input IN, inout SurfaceOutputStandard o)
+		{
+			o.Albedo = 1;
 		}
-		Pass {
-			Name "ShadowCaster"
-			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "Geometry+0" "RenderPipeline" = "LightweightPipeline" "RenderType" = "Opaque" }
-			GpuProgramID 115306
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthOnly"
-			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "Geometry+0" "RenderPipeline" = "LightweightPipeline" "RenderType" = "Opaque" }
-			ColorMask 0 -1
-			GpuProgramID 137660
-			// No subprograms found
-		}
+		ENDCG
 	}
 	Fallback "Hidden/InternalErrorShader"
 }
