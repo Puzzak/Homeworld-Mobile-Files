@@ -5,24 +5,24 @@ Shader "Custom/AggroCircleOutline" {
 		_StencilReference ("Stencil Reference", Float) = 101
 		[PerRendererData] _LossyScale ("Lossy Scale", Float) = 1
 	}
-	SubShader {
-		Tags { "QUEUE" = "Transparent+1" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
-		Pass {
-			Name "Outline"
-			Tags { "LIGHTMODE" = "UniversalForward" "QUEUE" = "Transparent+1" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Unlit" }
-			Blend One One, One One
-			ZTest Less
-			ZWrite Off
-			Cull Off
-			Stencil {
-				Comp NotEqual
-				Pass Replace
-				Fail Keep
-				ZFail Zero
-			}
-			GpuProgramID 25490
-			// No subprograms found
+	//DummyShaderTextExporter
+	SubShader{
+		Tags { "RenderType" = "Opaque" }
+		LOD 200
+		CGPROGRAM
+#pragma surface surf Standard
+#pragma target 3.0
+
+		struct Input
+		{
+			float2 uv_MainTex;
+		};
+
+		void surf(Input IN, inout SurfaceOutputStandard o)
+		{
+			o.Albedo = 1;
 		}
+		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
 }

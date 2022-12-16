@@ -15,96 +15,25 @@ Shader "Shader Graphs/DebrisAlphaShader" {
 		[HideInInspector] [NoScaleOffset] unity_LightmapsInd ("unity_LightmapsInd", 2DArray) = "" {}
 		[HideInInspector] [NoScaleOffset] unity_ShadowMasks ("unity_ShadowMasks", 2DArray) = "" {}
 	}
-	SubShader {
-		Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-		Pass {
-			Name "Universal Forward"
-			Tags { "LIGHTMODE" = "UniversalForward" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ZWrite Off
-			GpuProgramID 58214
-			// No subprograms found
+	//DummyShaderTextExporter
+	SubShader{
+		Tags { "RenderType" = "Opaque" }
+		LOD 200
+		CGPROGRAM
+#pragma surface surf Standard
+#pragma target 3.0
+
+		struct Input
+		{
+			float2 uv_MainTex;
+		};
+
+		void surf(Input IN, inout SurfaceOutputStandard o)
+		{
+			o.Albedo = 1;
 		}
-		Pass {
-			Name "GBuffer"
-			Tags { "LIGHTMODE" = "UniversalGBuffer" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ZWrite Off
-			GpuProgramID 71937
-			// No subprograms found
-		}
-		Pass {
-			Name "ShadowCaster"
-			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ColorMask 0 -1
-			GpuProgramID 193576
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthOnly"
-			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ColorMask 0 -1
-			GpuProgramID 239350
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthNormals"
-			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			GpuProgramID 327153
-			// No subprograms found
-		}
-		Pass {
-			Tags { "LIGHTMODE" = "Universal2D" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ZWrite Off
-			GpuProgramID 437812
-			// No subprograms found
-		}
-	}
-	SubShader {
-		Tags { "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-		Pass {
-			Name "Universal Forward"
-			Tags { "LIGHTMODE" = "UniversalForward" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ZWrite Off
-			GpuProgramID 515832
-			// No subprograms found
-		}
-		Pass {
-			Name "ShadowCaster"
-			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ColorMask 0 -1
-			GpuProgramID 569836
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthOnly"
-			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ColorMask 0 -1
-			GpuProgramID 627416
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthNormals"
-			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			GpuProgramID 720773
-			// No subprograms found
-		}
-		Pass {
-			Tags { "LIGHTMODE" = "Universal2D" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "UniversalMaterialType" = "Lit" }
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
-			ZWrite Off
-			GpuProgramID 830334
-			// No subprograms found
-		}
+		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
-	CustomEditor "ShaderGraph.PBRMasterGUI"
+	//CustomEditor "ShaderGraph.PBRMasterGUI"
 }

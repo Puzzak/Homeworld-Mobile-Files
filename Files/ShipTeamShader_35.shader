@@ -16,80 +16,25 @@ Shader "ShipTeamShader" {
 		[HideInInspector] [NoScaleOffset] unity_LightmapsInd ("unity_LightmapsInd", 2DArray) = "" {}
 		[HideInInspector] [NoScaleOffset] unity_ShadowMasks ("unity_ShadowMasks", 2DArray) = "" {}
 	}
-	SubShader {
-		Tags { "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-		Pass {
-			Name "Universal Forward"
-			Tags { "LIGHTMODE" = "UniversalForward" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			GpuProgramID 13666
-			// No subprograms found
+	//DummyShaderTextExporter
+	SubShader{
+		Tags { "RenderType" = "Opaque" }
+		LOD 200
+		CGPROGRAM
+#pragma surface surf Standard
+#pragma target 3.0
+
+		struct Input
+		{
+			float2 uv_MainTex;
+		};
+
+		void surf(Input IN, inout SurfaceOutputStandard o)
+		{
+			o.Albedo = 1;
 		}
-		Pass {
-			Name "GBuffer"
-			Tags { "LIGHTMODE" = "UniversalGBuffer" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			GpuProgramID 77155
-			// No subprograms found
-		}
-		Pass {
-			Name "ShadowCaster"
-			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			ColorMask 0 -1
-			GpuProgramID 167032
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthOnly"
-			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			ColorMask 0 -1
-			GpuProgramID 245319
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthNormals"
-			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			GpuProgramID 302893
-			// No subprograms found
-		}
-		Pass {
-			Tags { "LIGHTMODE" = "Universal2D" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			GpuProgramID 439192
-			// No subprograms found
-		}
-	}
-	SubShader {
-		Tags { "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-		Pass {
-			Name "Universal Forward"
-			Tags { "LIGHTMODE" = "UniversalForward" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			GpuProgramID 507271
-			// No subprograms found
-		}
-		Pass {
-			Name "ShadowCaster"
-			Tags { "LIGHTMODE" = "SHADOWCASTER" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			ColorMask 0 -1
-			GpuProgramID 584478
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthOnly"
-			Tags { "LIGHTMODE" = "DepthOnly" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			ColorMask 0 -1
-			GpuProgramID 637824
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthNormals"
-			Tags { "LIGHTMODE" = "DepthNormals" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			GpuProgramID 681292
-			// No subprograms found
-		}
-		Pass {
-			Tags { "LIGHTMODE" = "Universal2D" "QUEUE" = "Geometry" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "UniversalMaterialType" = "Lit" }
-			GpuProgramID 814513
-			// No subprograms found
-		}
+		ENDCG
 	}
 	Fallback "Hidden/Shader Graph/FallbackError"
-	CustomEditor "ShaderGraph.PBRMasterGUI"
+	//CustomEditor "ShaderGraph.PBRMasterGUI"
 }

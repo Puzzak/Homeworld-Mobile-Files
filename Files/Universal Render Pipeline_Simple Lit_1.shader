@@ -30,109 +30,29 @@ Shader "Universal Render Pipeline/Simple Lit" {
 		[HideInInspector] [NoScaleOffset] unity_LightmapsInd ("unity_LightmapsInd", 2DArray) = "" {}
 		[HideInInspector] [NoScaleOffset] unity_ShadowMasks ("unity_ShadowMasks", 2DArray) = "" {}
 	}
-	SubShader {
-		LOD 300
-		Tags { "IGNOREPROJECTOR" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" "UniversalMaterialType" = "SimpleLit" }
-		Pass {
-			Name "ForwardLit"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" "UniversalMaterialType" = "SimpleLit" }
-			Blend Zero Zero, Zero Zero
-			ZWrite Off
-			Cull Off
-			GpuProgramID 51569
-			// No subprograms found
+	//DummyShaderTextExporter
+	SubShader{
+		Tags { "RenderType"="Opaque" }
+		LOD 200
+		CGPROGRAM
+#pragma surface surf Standard
+#pragma target 3.0
+
+		sampler2D _MainTex;
+		fixed4 _Color;
+		struct Input
+		{
+			float2 uv_MainTex;
+		};
+		
+		void surf(Input IN, inout SurfaceOutputStandard o)
+		{
+			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+			o.Albedo = c.rgb;
+			o.Alpha = c.a;
 		}
-		Pass {
-			Name "ShadowCaster"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" "UniversalMaterialType" = "SimpleLit" }
-			ColorMask 0 -1
-			Cull Off
-			GpuProgramID 77501
-			// No subprograms found
-		}
-		Pass {
-			Name "GBuffer"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "UniversalGBuffer" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" "UniversalMaterialType" = "SimpleLit" }
-			ZWrite Off
-			Cull Off
-			GpuProgramID 140497
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthOnly"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "DepthOnly" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" "UniversalMaterialType" = "SimpleLit" }
-			ColorMask 0 -1
-			Cull Off
-			GpuProgramID 252942
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthNormals"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "DepthNormals" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "4.5" "UniversalMaterialType" = "SimpleLit" }
-			Cull Off
-			GpuProgramID 319578
-			// No subprograms found
-		}
-		Pass {
-			Name "Universal2D"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "Universal2D" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "ShaderModel" = "4.5" "UniversalMaterialType" = "SimpleLit" }
-			GpuProgramID 399446
-			// No subprograms found
-		}
-	}
-	SubShader {
-		LOD 300
-		Tags { "IGNOREPROJECTOR" = "true" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" "UniversalMaterialType" = "SimpleLit" }
-		Pass {
-			Name "ForwardLit"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "UniversalForward" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" "UniversalMaterialType" = "SimpleLit" }
-			Blend Zero Zero, Zero Zero
-			ZWrite Off
-			Cull Off
-			GpuProgramID 467714
-			// No subprograms found
-		}
-		Pass {
-			Name "ShadowCaster"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "SHADOWCASTER" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" "UniversalMaterialType" = "SimpleLit" }
-			ColorMask 0 -1
-			Cull Off
-			GpuProgramID 555409
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthOnly"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "DepthOnly" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" "UniversalMaterialType" = "SimpleLit" }
-			ColorMask 0 -1
-			Cull Off
-			GpuProgramID 643677
-			// No subprograms found
-		}
-		Pass {
-			Name "DepthNormals"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "DepthNormals" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "ShaderModel" = "2.0" "UniversalMaterialType" = "SimpleLit" }
-			Cull Off
-			GpuProgramID 665017
-			// No subprograms found
-		}
-		Pass {
-			Name "Universal2D"
-			LOD 300
-			Tags { "IGNOREPROJECTOR" = "true" "LIGHTMODE" = "Universal2D" "QUEUE" = "Transparent" "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent" "ShaderModel" = "2.0" "UniversalMaterialType" = "SimpleLit" }
-			GpuProgramID 838492
-			// No subprograms found
-		}
+		ENDCG
 	}
 	Fallback "Hidden/Universal Render Pipeline/FallbackError"
-	CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
+	//CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
 }
